@@ -1,20 +1,14 @@
+global.config = require('../config/config.js');
 var BS_NET = require('../net/bitStamp');
 var BS_DB = require('../model/BITSTAMPM.js').BITSTAMPM;
 var dateFormat = require('../component/dateFormat.js').format;
-var EventProxy = require('eventproxy');
+var EventProxy = require(global.config.NODE_PATH+'eventproxy');
 var job = function () {
     //connect db
-    var mysql = require('mysql');
-    var connection = mysql.createConnection({
-        user: 'root',
-        password: '123456',
-        host: '127.0.0.1',
-        port: '3306',
-        database: 'bit',
-        charset: 'UTF8_GENERAL_CI',
-        timezone: '+8:00'
-    });
+    var mysql = require(global.config.NODE_PATH+'mysql');
+    var connection = mysql.createConnection(global.config.MYSQL_DB);
     connection.connect(function (err) {
+        if(err) throw err;
     });
     console.log(info_json);
     var bitstamp = new BS_DB();
